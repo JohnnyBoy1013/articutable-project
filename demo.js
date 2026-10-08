@@ -84,14 +84,6 @@ function prepareDemo() {
   return preparedDemo;
 }
 
-const previewObserver = new IntersectionObserver((entries) => {
-  if (!entries.some((entry) => entry.isIntersecting)) return;
-  fetchModel().catch(() => {});
-  loadModules().catch(() => {});
-  previewObserver.disconnect();
-}, { rootMargin: '250px' });
-previewObserver.observe(document.querySelector('#demo'));
-
 loadButton.addEventListener('click', async () => {
   loadButton.disabled = true;
   poster.classList.add('is-loading');
