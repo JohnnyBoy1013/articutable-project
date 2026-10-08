@@ -43,7 +43,12 @@ function fetchModel() {
     request.onload = () => {
       if (request.status !== 200) return reject(new Error(`3D model HTTP ${request.status}`));
       progressBar.value = 100;
-      progressLabel.textContent = '3D model ready';
+      if (poster.classList.contains('is-loading')) {
+        progressBar.removeAttribute('value');
+        progressLabel.textContent = 'Preparing 3D scene…';
+      } else {
+        progress.hidden = true;
+      }
       resolve(request.response);
     };
     request.onerror = () => reject(new Error('3D model download failed'));
@@ -84,7 +89,8 @@ function prepareDemo() {
   if (preparedDemo) return preparedDemo;
   preparedDemo = (async () => {
     const [[THREE, { GLTFLoader }, { DRACOLoader }, { OrbitControls }, { RoomEnvironment }], data] = await Promise.all([loadModules(), fetchModel()]);
-    status.textContent = 'Preparing the 3D scene…';
+    progressBar.removeAttribute('value');
+    progressLabel.textContent = 'Preparing 3D scene…';
     const draco = new DRACOLoader();
     draco.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/libs/draco/');
     try {
@@ -114,13 +120,17 @@ window.addEventListener('load', () => {
 loadButton.addEventListener('click', async () => {
   loadButton.disabled = true;
   poster.classList.add('is-loading');
-  status.hidden = false;
-  status.textContent = 'Loading the 3D scene…';
+  status.hidden = true;
+  progress.hidden = false;
+  if (progressBar.value === 100) {
+    progressBar.removeAttribute('value');
+    progressLabel.textContent = 'Preparing 3D scene…';
+  }
   let renderer;
 
   try {
     const { THREE, OrbitControls, RoomEnvironment, gltf } = await prepareDemo();
-    status.textContent = 'Starting the 3D view…';
+    progressLabel.textContent = 'Starting 3D view…';
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#d9d9d9');
@@ -364,7 +374,6 @@ loadButton.addEventListener('click', async () => {
     };
     viewport.hidden = false;
     poster.hidden = true;
-    progress.hidden = true;
     toolbar.hidden = false;
     jointControls.hidden = false;
     hint.hidden = false;
@@ -380,7 +389,10 @@ loadButton.addEventListener('click', async () => {
       if (playing) updateMotion((now - started) / 1000);
       const cameraMoved = controls.update();
       if (playing) renderer.shadowMap.needsUpdate = true;
-      if (playing || cameraMoved || needsRender) renderer.render(scene, camera);
+      if (playing || cameraMoved || needsRender) {
+        renderer.render(scene, camera);
+        if (!progress.hidden) progress.hidden = true;
+      }
       needsRender = false;
     }
     requestAnimationFrame(render);
@@ -388,6 +400,8 @@ loadButton.addEventListener('click', async () => {
     console.error('3D demo failed to load', error);
     renderer?.dispose();
     poster.classList.remove('is-loading');
+    progress.hidden = true;
+    status.hidden = false;
     status.textContent = 'The 3D scene could not load. Please try again or watch the videos below.';
     loadButton.disabled = false;
   }
