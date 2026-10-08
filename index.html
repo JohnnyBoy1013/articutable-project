@@ -6,7 +6,9 @@
   <meta name="theme-color" content="#f8f6fc">
   <meta name="description" content="ArticuTable reconstructs interactive, simulation-ready rigid-articulated 3D tabletop scenes from a single image.">
   <title>ArticuTable: Interactive Rigid-Articulated 3D Tabletop Scenes from a Single Image</title>
-  <link rel="icon" href="assets/favicon-diorama.png" type="image/png">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="assets/favicon-180.png" sizes="180x180">
   <link rel="stylesheet" href="style.css?v=20261008">
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
   <script type="module" src="demo.js?v=20261008"></script>
@@ -87,17 +89,17 @@
     <section class="wide section" id="method">
       <h2>Method</h2>
       <p class="section-lead">A single-image pipeline for reconstructing articulated assets and registering them in a consistent 3D scene.</p>
-      <figure class="figure"><img src="assets/method.png?v=20261006" width="1650" height="850" alt="ArticuTable pipeline: asset reconstruction, GRAM articulation modeling, PSGSR scene registration, and simulation-ready output"><figcaption><strong>Figure 2.</strong> Overview of the ArticuTable framework.</figcaption></figure>
+      <figure class="figure"><img src="assets/method.png?v=20261008-v2" width="2400" height="1254" loading="lazy" decoding="async" alt="ArticuTable pipeline: asset reconstruction, GRAM articulation modeling, PSGSR scene registration, and simulation-ready output"><figcaption><strong>Figure 2.</strong> Overview of the ArticuTable framework.</figcaption></figure>
       <div class="method-details"><div><span class="method-tag">01 · ARTICULATION</span><h3>Generation-Robust Articulation Modeling</h3><p>GRAM turns imperfect proxy meshes into executable assets by recovering joint structure, parameters, and motion ranges.</p></div><div><span class="method-tag">02 · REGISTRATION</span><h3>Progressive Scene Registration</h3><p>PSGSR aligns object position, orientation, and scale through metric, planar, and input-view constraints.</p></div></div>
     </section>
 
     <section class="wide section" id="results">
       <h2>Reconstruction Results</h2>
       <p class="section-lead">Comparisons on generated and real-world tabletop images.</p>
-      <figure class="figure"><img src="assets/teaser.png?v=20261006" width="1650" height="535" alt="One RGB tabletop image reconstructed as an articulated scene under multiple joint configurations"><figcaption><strong>Figure 1.</strong> Single-image reconstruction of articulated tabletop scenes under different joint configurations.</figcaption></figure>
-      <figure class="figure"><img src="assets/comparison.png?v=20261006" width="1650" height="930" alt="Qualitative comparisons between input images, baseline 3D reconstruction methods, and ArticuTable"><figcaption><strong>Figure 3.</strong> Qualitative comparison with existing single-image tabletop reconstruction methods.</figcaption></figure>
+      <figure class="figure"><img src="assets/teaser.png?v=20261008-v2" width="2400" height="752" loading="lazy" decoding="async" alt="One RGB tabletop image reconstructed as an articulated scene under multiple joint configurations"><figcaption><strong>Figure 1.</strong> Single-image reconstruction of articulated tabletop scenes under different joint configurations.</figcaption></figure>
+      <figure class="figure"><img src="assets/comparison.png?v=20261008-v2" width="2400" height="1350" loading="lazy" decoding="async" alt="Qualitative comparisons between input images, baseline 3D reconstruction methods, and ArticuTable"><figcaption><strong>Figure 3.</strong> Qualitative comparison with existing single-image tabletop reconstruction methods.</figcaption></figure>
       <h3 class="subheading">Interactive and simulation-ready</h3>
-      <figure class="figure"><img src="assets/interaction.png?v=20261006" width="1650" height="700" alt="In-scene editing and physics validation with object removal, insertion, rearrangement, dragging, and articulated opening"><figcaption><strong>Figure 6.</strong> In-scene editing and physics validation, including articulated opening.</figcaption></figure>
+      <figure class="figure"><img src="assets/interaction.png?v=20261008-v2" width="2400" height="989" loading="lazy" decoding="async" alt="In-scene editing and physics validation with object removal, insertion, rearrangement, dragging, and articulated opening"><figcaption><strong>Figure 6.</strong> In-scene editing and physics validation, including articulated opening.</figcaption></figure>
     </section>
 
     <section class="wide section evaluation" id="evaluation">
