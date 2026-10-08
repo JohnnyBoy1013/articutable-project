@@ -18,6 +18,9 @@ const loadButton = document.querySelector('#load-demo');
 const poster = document.querySelector('#demo-poster');
 const viewport = document.querySelector('#demo-viewport');
 const status = document.querySelector('#demo-status');
+const progress = document.querySelector('#demo-progress');
+const progressLabel = document.querySelector('#demo-progress-label');
+const progressBar = document.querySelector('#demo-progress-bar');
 const toolbar = document.querySelector('#demo-toolbar');
 const hint = document.querySelector('#demo-hint');
 const motionButton = document.querySelector('#motion-button');
@@ -32,13 +35,29 @@ function fetchModel() {
     request.open('GET', 'assets/demo-scene.glb');
     request.responseType = 'arraybuffer';
     request.onprogress = (event) => {
-      if (!status.hidden && event.lengthComputable) status.textContent = `Loading the 3D scene… ${Math.round(event.loaded / event.total * 100)}%`;
+      if (!event.lengthComputable) return;
+      const percent = Math.round(event.loaded / event.total * 100);
+      progressBar.value = percent;
+      progressLabel.textContent = `Downloading 3D model… ${percent}%`;
     };
-    request.onload = () => request.status === 200 ? resolve(request.response) : reject(new Error(`3D model HTTP ${request.status}`));
+    request.onload = () => {
+      if (request.status !== 200) return reject(new Error(`3D model HTTP ${request.status}`));
+      progressBar.value = 100;
+      progressLabel.textContent = '3D model ready';
+      resolve(request.response);
+    };
     request.onerror = () => reject(new Error('3D model download failed'));
+    progress.hidden = false;
+    progressBar.value = 0;
+    progressLabel.textContent = 'Downloading 3D model… 0%';
     request.send();
   }).catch((error) => {
     modelData = null;
+    progress.hidden = true;
+    if (!poster.classList.contains('is-loading')) {
+      status.hidden = false;
+      status.textContent = '3D model download failed. Click Explore in 3D to retry.';
+    }
     throw error;
   });
   return modelData;
@@ -83,6 +102,14 @@ function prepareDemo() {
   });
   return preparedDemo;
 }
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (preparedDemo) return;
+    fetchModel().catch(() => {});
+    loadModules().catch(() => {});
+  }, 1500);
+});
 
 loadButton.addEventListener('click', async () => {
   loadButton.disabled = true;
@@ -337,6 +364,7 @@ loadButton.addEventListener('click', async () => {
     };
     viewport.hidden = false;
     poster.hidden = true;
+    progress.hidden = true;
     toolbar.hidden = false;
     jointControls.hidden = false;
     hint.hidden = false;

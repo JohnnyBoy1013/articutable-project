@@ -9,9 +9,9 @@
   <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="icon" href="assets/favicon-64.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="assets/favicon-180.png" sizes="180x180">
-  <link rel="stylesheet" href="style.css?v=20261008">
+  <link rel="stylesheet" href="style.css?v=20261008-progress">
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}</script>
-  <script type="module" src="demo.js?v=20261008-on-demand"></script>
+  <script type="module" src="demo.js?v=20261008-progress"></script>
 </head>
 <body>
   <main>
@@ -47,6 +47,7 @@
         </div>
         <div class="demo-viewport" id="demo-viewport" aria-label="Interactive 3D tabletop scene" hidden></div>
         <div class="demo-hint" id="demo-hint" hidden>Drag to rotate <span>·</span> Scroll or pinch to zoom</div>
+        <div class="demo-progress" id="demo-progress" hidden><span id="demo-progress-label">Downloading 3D model… 0%</span><progress id="demo-progress-bar" max="100" value="0" aria-label="3D model download"></progress></div>
         <p class="demo-status" id="demo-status" role="status" hidden></p>
       </div>
       <div class="demo-toolbar" id="demo-toolbar" hidden>
